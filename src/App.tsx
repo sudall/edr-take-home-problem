@@ -1,6 +1,4 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
 import { createMuiTheme, CssBaseline } from '@material-ui/core';
 import { blueGrey } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/styles';
@@ -17,7 +15,7 @@ export default function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Search/>
+            <Search />
         </ThemeProvider>
     );
 }
