@@ -6,20 +6,6 @@ import Links from 'components/Links';
 import useAsync from 'hooks/useAsync';
 import SystemUtils from 'utils/SystemUtils';
 
-type SearchParameters = {
-    geographicArea: {
-        positionLatLong;
-        radiusMeters;
-    };
-    car: {
-        year: number;
-        make: Make;
-        model: Model;
-        condition: KelleyBlueBlookCondition;
-    };
-    searchText: string;
-};
-
 const Search: FunctionComponent = () => {
     const [asyncState, trigger] = useAsync(() => {
         return SystemUtils.setTimeout(1000);
