@@ -31,7 +31,7 @@ type SearchParams = {
         model: Model;
         year?: number;
     };
-    wholeVehicle: {
+    wholeVehicle?: {
         condition?: Condition;
         price?: number;
     };
