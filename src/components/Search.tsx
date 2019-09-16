@@ -2,8 +2,11 @@ import * as React from 'react';
 import { FunctionComponent, useEffect, useState } from 'react';
 import {
     Button,
+    Checkbox,
     CircularProgress,
     FormControl,
+    FormControlLabel,
+    FormGroup,
     InputLabel,
     MenuItem,
     Select,
@@ -40,11 +43,33 @@ const vehicles = {
 type Vehicles = typeof vehicles;
 type VehicleMake = keyof Vehicles;
 
+type Condition = 'Excellent' | 'Good' | 'Fair' | 'Poor';
+const selectableConditions: Condition[] = ['Poor', 'Fair', 'Good', 'Excellent'];
+
+type PartType = 'Engine' | 'Exhaust' | 'Cooling System' | 'Wheels';
+const selectablePartTypes: PartType[] = [
+    'Engine',
+    'Exhaust',
+    'Cooling System',
+    'Wheels'
+];
+
+type Part = {
+    partType: PartType;
+};
+
 const Search: FunctionComponent = () => {
-    const [display, setDisplay] = useState<Display>('map');
+    const [display, setDisplay] = useState<Display>('list');
     const [make, setMake] = useState<VehicleMake | ''>('');
     const [model, setModel] = useState('');
     const [year, setYear] = useState('');
+    const [isWholeVehicle, setIsWholeVehicle] = useState(false);
+    const [vehicleCondition, setVehicleCondition] = useState<Condition | ''>(
+        ''
+    );
+    const [selectedParts, setSelectedParts] = useState<Set<PartType>>(
+        new Set()
+    );
 
     const [asyncState, trigger] = useAsync(async () => {
         await SystemUtils.setTimeout(1000);
@@ -65,7 +90,6 @@ const Search: FunctionComponent = () => {
                 <Box
                     display={'flex'}
                     flexDirection={'column'}
-                    my={2}
                     width={300}
                     padding={2}
                 >
@@ -73,9 +97,9 @@ const Search: FunctionComponent = () => {
                         <TextField
                             fullWidth={true}
                             label={'Name or Address'}
-                            margin={'normal'}
+                            margin={'dense'}
                         />
-                        <FormControl fullWidth={true} margin={'normal'}>
+                        <FormControl fullWidth={true} margin={'dense'}>
                             <InputLabel htmlFor='make'>Make</InputLabel>
                             <Select
                                 inputProps={{
@@ -91,14 +115,17 @@ const Search: FunctionComponent = () => {
                             >
                                 {Object.keys(vehicles).map(makeOption => {
                                     return (
-                                        <MenuItem value={makeOption}>
+                                        <MenuItem
+                                            key={makeOption}
+                                            value={makeOption}
+                                        >
                                             {makeOption}
                                         </MenuItem>
                                     );
                                 })}
                             </Select>
                         </FormControl>
-                        <FormControl fullWidth={true} margin={'normal'}>
+                        <FormControl fullWidth={true} margin={'dense'}>
                             <InputLabel htmlFor='model'>Model</InputLabel>
                             <Select
                                 inputProps={{
@@ -115,7 +142,10 @@ const Search: FunctionComponent = () => {
                                     Object.keys(vehicles[make]).map(
                                         modelOption => {
                                             return (
-                                                <MenuItem value={modelOption}>
+                                                <MenuItem
+                                                    key={modelOption}
+                                                    value={modelOption}
+                                                >
                                                     {modelOption}
                                                 </MenuItem>
                                             );
@@ -123,7 +153,7 @@ const Search: FunctionComponent = () => {
                                     )}
                             </Select>
                         </FormControl>
-                        <FormControl fullWidth={true} margin={'normal'}>
+                        <FormControl fullWidth={true} margin={'dense'}>
                             <InputLabel htmlFor='year'>Year</InputLabel>
                             <Select
                                 inputProps={{
@@ -142,13 +172,124 @@ const Search: FunctionComponent = () => {
                                         (vehicles as any)[make][model]
                                     ).map(yearOption => {
                                         return (
-                                            <MenuItem value={yearOption}>
+                                            <MenuItem
+                                                key={yearOption}
+                                                value={yearOption}
+                                            >
                                                 {yearOption}
                                             </MenuItem>
                                         );
                                     })}
                             </Select>
                         </FormControl>
+                        <FormGroup>
+                            <FormControl margin={'dense'}>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={isWholeVehicle}
+                                            onChange={() =>
+                                                setIsWholeVehicle(
+                                                    !isWholeVehicle
+                                                )
+                                            }
+                                        />
+                                    }
+                                    label='Whole Vehicle'
+                                />
+                            </FormControl>
+                            {isWholeVehicle && (
+                                <Box marginLeft={2}>
+                                    <TextField
+                                        fullWidth={true}
+                                        label={'Price'}
+                                        margin={'dense'}
+                                    />
+                                    <FormControl
+                                        fullWidth={true}
+                                        margin={'dense'}
+                                    >
+                                        <InputLabel htmlFor='vehicleCondition'>
+                                            Condition
+                                        </InputLabel>
+                                        <Select
+                                            inputProps={{
+                                                name: 'vehicleCondition',
+                                                id: 'vehicleCondition'
+                                            }}
+                                            value={vehicleCondition}
+                                            onChange={event => {
+                                                const condition = event.target
+                                                    .value as Condition;
+                                                setVehicleCondition(condition);
+                                            }}
+                                        >
+                                            {selectableConditions.map(
+                                                condition => {
+                                                    return (
+                                                        <MenuItem
+                                                            key={condition}
+                                                            value={condition}
+                                                        >
+                                                            {condition}
+                                                        </MenuItem>
+                                                    );
+                                                }
+                                            )}
+                                        </Select>
+                                    </FormControl>
+                                </Box>
+                            )}
+                            {selectablePartTypes.map(partType => {
+                                return (
+                                    <React.Fragment key={partType}>
+                                        <FormControl margin={'dense'}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        checked={selectedParts.has(
+                                                            partType
+                                                        )}
+                                                        onChange={(
+                                                            event,
+                                                            checked
+                                                        ) => {
+                                                            const newSelectedParts = new Set(
+                                                                selectedParts
+                                                            );
+
+                                                            if (checked) {
+                                                                newSelectedParts.add(
+                                                                    partType
+                                                                );
+                                                            } else {
+                                                                newSelectedParts.delete(
+                                                                    partType
+                                                                );
+                                                            }
+
+                                                            setSelectedParts(
+                                                                newSelectedParts
+                                                            );
+                                                        }}
+                                                    />
+                                                }
+                                                label={partType}
+                                            />
+                                        </FormControl>
+                                        {selectedParts.has(partType) && (
+                                            <Box marginLeft={2}>
+                                                <TextField
+                                                    fullWidth={true}
+                                                    label={'Price'}
+                                                    margin={'dense'}
+                                                />
+                                            </Box>
+                                        )}
+                                    </React.Fragment>
+                                );
+                            })}
+                        </FormGroup>
                     </Box>
                     <Box my={2}>
                         <Button
