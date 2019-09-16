@@ -182,7 +182,7 @@ const Search: FunctionComponent = () => {
                                     })}
                             </Select>
                         </FormControl>
-                        <Box marginLeft={1.5} marginTop={1.5}>
+                        <Box paddingLeft={1.5} paddingTop={1.5}>
                             <FormGroup>
                                 <FormControlLabel
                                     control={
@@ -198,7 +198,7 @@ const Search: FunctionComponent = () => {
                                     label='Whole Vehicle'
                                 />
                                 {isWholeVehicle && (
-                                    <Box marginLeft={2}>
+                                    <Box paddingLeft={2} width={'100%'}>
                                         <TextField
                                             fullWidth={true}
                                             label={'Price'}
@@ -280,7 +280,10 @@ const Search: FunctionComponent = () => {
                                                 label={partType}
                                             />
                                             {selectedParts.has(partType) && (
-                                                <Box marginLeft={2}>
+                                                <Box
+                                                    paddingLeft={2}
+                                                    width={'100%'}
+                                                >
                                                     <TextField
                                                         fullWidth={true}
                                                         label={'Price'}
