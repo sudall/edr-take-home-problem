@@ -53,7 +53,7 @@ You'd also need a database of known vehicles and parts in order to fill in the f
 
 User Interface:
 
-- Google Maps for the map component. This component would collect the latLongBounds.
+- Google Maps for the map component. This component would collect the latLongBounds and start at the current device location.
     - Here's an example of how to use custom data with Google Maps: https://developers.google.com/maps/solutions/store-locator/clothing-store-locator
     - This looks like a decent React library for displaying markers on a google map: https://github.com/google-map-react/google-map-react
         - MIT license, so we're good to go.
