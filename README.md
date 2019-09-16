@@ -99,7 +99,7 @@ To find refurbishers, I would filter refurbishers in this order:
 
 - by whole vehicle and or part makes and models accepted. if whole vehicle and parts are specified, a refurbisher must be able to buy the whole vehicle and all parts specified. I would want to confirm this behavior before implementation.
 
-- by price. the price specified for the whole vehicle or each part must be under the maximum price for the refurbisher, based on condition. I don't think it makes sense to filter out refurbishers if the price specified is below the minimum in the database. My assumption here is that a refurbisher would not realistically have a minimum they are willing to pay, rather maybe this number represents the lowest they have bought something for. I would want to confirm this behavior before implementation.
+- by price. the price specified for the whole vehicle or each part must be less than or equal to the maximum price for the refurbisher, based on condition. I don't think it makes sense to filter out refurbishers if the price specified is below the minimum in the database. My assumption here is that a refurbisher would not realistically have a minimum they are willing to pay, rather maybe this number represents the lowest they have bought something for. I would want to confirm this behavior before implementation.
 
 In list view, it seems like it would be most valuable to sort the refurbishers by the sum of the average prices ((min + max) / 2) for all parts/vehicles specified, by default. I would want to confirm this before implementation. Another sorting option could be by distance.
 
