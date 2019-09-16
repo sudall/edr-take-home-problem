@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import {
     Button,
     CircularProgress,
@@ -50,6 +50,14 @@ const Search: FunctionComponent = () => {
         await SystemUtils.setTimeout(1000);
         return 'result';
     });
+
+    useEffect(() => {
+        setModel('');
+    }, [make]);
+
+    useEffect(() => {
+        setYear('');
+    }, [model, make]);
 
     return (
         <>
@@ -103,6 +111,7 @@ const Search: FunctionComponent = () => {
                                 }}
                             >
                                 {make !== '' &&
+                                    vehicles[make] != null &&
                                     Object.keys(vehicles[make]).map(
                                         modelOption => {
                                             return (
@@ -128,6 +137,7 @@ const Search: FunctionComponent = () => {
                             >
                                 {make !== '' &&
                                     model !== '' &&
+                                    (vehicles as any)[make][model] != null &&
                                     Object.keys(
                                         (vehicles as any)[make][model]
                                     ).map(yearOption => {
