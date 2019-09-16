@@ -11,13 +11,9 @@ import {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            marginBottom: theme.spacing(2),
             padding: theme.spacing(1),
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2)
-        },
-        input: {
-            width: '100%'
         }
     })
 );
@@ -28,7 +24,7 @@ const SearchInput: FunctionComponent = () => {
     return (
         <Paper className={classes.root}>
             <InputBase
-                className={classes.input}
+                fullWidth={true}
                 placeholder='Search or paste a URL'
                 inputProps={{ 'aria-label': 'search or paste a URL' }}
             />
