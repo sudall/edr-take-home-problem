@@ -182,8 +182,8 @@ const Search: FunctionComponent = () => {
                                     })}
                             </Select>
                         </FormControl>
-                        <FormGroup>
-                            <FormControl margin={'dense'}>
+                        <Box marginLeft={1.5} marginTop={1.5}>
+                            <FormGroup>
                                 <FormControlLabel
                                     control={
                                         <Checkbox
@@ -197,53 +197,56 @@ const Search: FunctionComponent = () => {
                                     }
                                     label='Whole Vehicle'
                                 />
-                            </FormControl>
-                            {isWholeVehicle && (
-                                <Box marginLeft={2}>
-                                    <TextField
-                                        fullWidth={true}
-                                        label={'Price'}
-                                        margin={'dense'}
-                                    />
-                                    <FormControl
-                                        fullWidth={true}
-                                        margin={'dense'}
-                                    >
-                                        <InputLabel htmlFor='vehicleCondition'>
-                                            Condition
-                                        </InputLabel>
-                                        <Select
-                                            inputProps={{
-                                                name: 'vehicleCondition',
-                                                id: 'vehicleCondition'
-                                            }}
-                                            value={vehicleCondition}
-                                            onChange={event => {
-                                                const condition = event.target
-                                                    .value as Condition;
-                                                setVehicleCondition(condition);
-                                            }}
+                                {isWholeVehicle && (
+                                    <Box marginLeft={2}>
+                                        <TextField
+                                            fullWidth={true}
+                                            label={'Price'}
+                                            margin={'dense'}
+                                        />
+                                        <FormControl
+                                            fullWidth={true}
+                                            margin={'dense'}
                                         >
-                                            {selectableConditions.map(
-                                                condition => {
-                                                    return (
-                                                        <MenuItem
-                                                            key={condition}
-                                                            value={condition}
-                                                        >
-                                                            {condition}
-                                                        </MenuItem>
+                                            <InputLabel htmlFor='vehicleCondition'>
+                                                Condition
+                                            </InputLabel>
+                                            <Select
+                                                inputProps={{
+                                                    name: 'vehicleCondition',
+                                                    id: 'vehicleCondition'
+                                                }}
+                                                value={vehicleCondition}
+                                                onChange={event => {
+                                                    const condition = event
+                                                        .target
+                                                        .value as Condition;
+                                                    setVehicleCondition(
+                                                        condition
                                                     );
-                                                }
-                                            )}
-                                        </Select>
-                                    </FormControl>
-                                </Box>
-                            )}
-                            {selectablePartTypes.map(partType => {
-                                return (
-                                    <React.Fragment key={partType}>
-                                        <FormControl margin={'dense'}>
+                                                }}
+                                            >
+                                                {selectableConditions.map(
+                                                    condition => {
+                                                        return (
+                                                            <MenuItem
+                                                                key={condition}
+                                                                value={
+                                                                    condition
+                                                                }
+                                                            >
+                                                                {condition}
+                                                            </MenuItem>
+                                                        );
+                                                    }
+                                                )}
+                                            </Select>
+                                        </FormControl>
+                                    </Box>
+                                )}
+                                {selectablePartTypes.map(partType => {
+                                    return (
+                                        <React.Fragment key={partType}>
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
@@ -276,20 +279,20 @@ const Search: FunctionComponent = () => {
                                                 }
                                                 label={partType}
                                             />
-                                        </FormControl>
-                                        {selectedParts.has(partType) && (
-                                            <Box marginLeft={2}>
-                                                <TextField
-                                                    fullWidth={true}
-                                                    label={'Price'}
-                                                    margin={'dense'}
-                                                />
-                                            </Box>
-                                        )}
-                                    </React.Fragment>
-                                );
-                            })}
-                        </FormGroup>
+                                            {selectedParts.has(partType) && (
+                                                <Box marginLeft={2}>
+                                                    <TextField
+                                                        fullWidth={true}
+                                                        label={'Price'}
+                                                        margin={'dense'}
+                                                    />
+                                                </Box>
+                                            )}
+                                        </React.Fragment>
+                                    );
+                                })}
+                            </FormGroup>
+                        </Box>
                     </Box>
                     <Box my={2}>
                         <Button
